@@ -1,0 +1,61 @@
+az login
+
+az account list-locations --output table
+
+
+az group create --name gname20230297 \
+                --location switzerlandnorth
+                
+                
+az iot hub create --resource-group gname20230297 \
+                  --sku F1 \
+                  --partition-count 2 \
+                  --name hname20230297
+                  
+
+az iot hub device-identity create --device-id did20230297 \
+                                  --hub-name hname20230297
+                                  
+                                  
+az iot hub generate-sas-token --device-id did20230297 \
+                              --hub-name hname20230297 \
+                              --duration 1000000   
+                              
+                              
+ "sas": "SharedAccessSignature sr=hname20230297.azure-devices.net%2Fdevices%2Fdid20230297&sig=ddyc%2Bg77G5YHR3%2B9hqqQzHblnvrTAFADO09vTibgQ6w%3D&se=1770178547"
+
+az iot hub monitor-events --hub-name hname20230297
+
+
+mkdir azurite
+
+
+azurite --location azurite
+
+
+mkdir triggerfuncapp20230297
+cd iot-hub-trigger
+
+
+func init --worker-runtime python iot-hub-trigger
+
+
+pip3 install -r requirements.txt
+
+
+func start
+
+code .
+
+licao 9
+
+
+az iot hub connection-string show --default-eventhub \
+                                  --output table \
+                                  --hub-name hname20230297
+                                  
+Endpoint=sb://ihsuprodswitzerlandnorthres003dednamespace.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=jQAQA9CBirPjabRynnEztmRTRhNVJcZm+AIoTO8IRzI=;EntityPath=iothub-ehub-hname20230-55814219-58f255802a
+                                  
+                                  
+func new --name iot-hub-trigger --template "Azure Event Hub trigger"
+

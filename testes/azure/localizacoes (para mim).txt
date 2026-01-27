@@ -1,0 +1,1 @@
+["switzerlandnorth","norwayeast","spaincentral","polandcentral","swedencentral"]
